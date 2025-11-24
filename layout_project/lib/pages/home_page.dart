@@ -52,11 +52,19 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
+        onPressed: () async {
+          final result = await Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const AddProductPage()),
+            MaterialPageRoute(
+              builder: (context) => const AddProductPage(),
+            ),
           );
+
+          if (result != null && result is Product) {
+            setState(() {
+              products.add(result);
+            });
+          }
         },
         backgroundColor: Colors.blue[700],
         shape: const CircleBorder(),
@@ -159,7 +167,29 @@ class _HomePageState extends State<HomePage> {
         itemBuilder: (context, index) {
           return Padding(
             padding: const EdgeInsets.only(bottom: 16.0),
-            child: ProductCard(product: products[index]),
+            child: GestureDetector(
+              onTap: () async {
+                final result = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AddProductPage(
+                      product: products[index],
+                    ),
+                  ),
+                );
+
+                if (result != null) {
+                  setState(() {
+                    if (result == 'delete') {
+                      products.removeAt(index);
+                    } else if (result is Product) {
+                      products[index] = result;
+                    }
+                  });
+                }
+              },
+              child: ProductCard(product: products[index]),
+            ),
           );
         },
       ),

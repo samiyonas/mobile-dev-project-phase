@@ -1,10 +1,78 @@
 import 'package:flutter/material.dart';
+import '../models/product.dart';
 
-class AddProductPage extends StatelessWidget {
-  const AddProductPage({super.key});
+class AddProductPage extends StatefulWidget {
+  final Product? product;
+
+  const AddProductPage({
+    super.key,
+    this.product,
+  });
+
+  @override
+  State<AddProductPage> createState() => _AddProductPageState();
+}
+
+class _AddProductPageState extends State<AddProductPage> {
+  late TextEditingController _nameController;
+  late TextEditingController _categoryController;
+  late TextEditingController _priceController;
+  late TextEditingController _descriptionController;
+
+  @override
+  void initState() {
+    super.initState();
+    _nameController = TextEditingController(text: widget.product?.name ?? '');
+    _categoryController =
+        TextEditingController(text: widget.product?.category ?? '');
+    _priceController =
+        TextEditingController(text: widget.product?.price.toString() ?? '');
+    _descriptionController =
+        TextEditingController(text: widget.product?.description ?? '');
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _categoryController.dispose();
+    _priceController.dispose();
+    _descriptionController.dispose();
+    super.dispose();
+  }
+
+  void _saveProduct() {
+    final name = _nameController.text;
+    final category = _categoryController.text;
+    final price = double.tryParse(_priceController.text) ?? 0.0;
+    final description = _descriptionController.text;
+
+    if (name.isEmpty || category.isEmpty || description.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please fill in all fields')),
+      );
+      return;
+    }
+
+    final newProduct = Product(
+      name: name,
+      category: category,
+      price: price,
+      rating: widget.product?.rating ?? 0.0,
+      imageUrl: widget.product?.imageUrl ?? 'assets/images/shoe.png',
+      description: description,
+    );
+
+    Navigator.pop(context, newProduct);
+  }
+
+  void _deleteProduct() {
+    Navigator.pop(context, 'delete');
+  }
 
   @override
   Widget build(BuildContext context) {
+    final isEditing = widget.product != null;
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -14,9 +82,9 @@ class AddProductPage extends StatelessWidget {
           icon: const Icon(Icons.chevron_left, color: Colors.blue),
           onPressed: () => Navigator.pop(context),
         ),
-        title: const Text(
-          'Add Product',
-          style: TextStyle(
+        title: Text(
+          isEditing ? 'Edit Product' : 'Add Product',
+          style: const TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.bold,
           ),
@@ -52,7 +120,7 @@ class AddProductPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 24),
-            
+
             const Text(
               'name',
               style: TextStyle(
@@ -62,6 +130,7 @@ class AddProductPage extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             TextField(
+              controller: _nameController,
               decoration: InputDecoration(
                 filled: true,
                 fillColor: Colors.grey[100],
@@ -72,7 +141,7 @@ class AddProductPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-            
+
             const Text(
               'category',
               style: TextStyle(
@@ -82,6 +151,7 @@ class AddProductPage extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             TextField(
+              controller: _categoryController,
               decoration: InputDecoration(
                 filled: true,
                 fillColor: Colors.grey[100],
@@ -92,7 +162,7 @@ class AddProductPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-            
+
             const Text(
               'price',
               style: TextStyle(
@@ -102,6 +172,7 @@ class AddProductPage extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             TextField(
+              controller: _priceController,
               decoration: InputDecoration(
                 filled: true,
                 fillColor: Colors.grey[100],
@@ -114,7 +185,7 @@ class AddProductPage extends StatelessWidget {
               keyboardType: TextInputType.number,
             ),
             const SizedBox(height: 16),
-            
+
             const Text(
               'description',
               style: TextStyle(
@@ -124,6 +195,7 @@ class AddProductPage extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             TextField(
+              controller: _descriptionController,
               maxLines: 5,
               decoration: InputDecoration(
                 filled: true,
@@ -135,12 +207,12 @@ class AddProductPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 32),
-            
+
             // Buttons
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: _saveProduct,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue[700],
                   padding: const EdgeInsets.symmetric(vertical: 16),
@@ -149,9 +221,9 @@ class AddProductPage extends StatelessWidget {
                   ),
                   elevation: 0,
                 ),
-                child: const Text(
-                  'ADD',
-                  style: TextStyle(
+                child: Text(
+                  isEditing ? 'UPDATE' : 'ADD',
+                  style: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                   ),
@@ -159,26 +231,27 @@ class AddProductPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-            SizedBox(
-              width: double.infinity,
-              child: OutlinedButton(
-                onPressed: () {},
-                style: OutlinedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  side: const BorderSide(color: Colors.red),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+            if (isEditing)
+              SizedBox(
+                width: double.infinity,
+                child: OutlinedButton(
+                  onPressed: _deleteProduct,
+                  style: OutlinedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    side: const BorderSide(color: Colors.red),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
                   ),
-                ),
-                child: const Text(
-                  'DELETE',
-                  style: TextStyle(
-                    color: Colors.red,
-                    fontWeight: FontWeight.bold,
+                  child: const Text(
+                    'DELETE',
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
-            ),
           ],
         ),
       ),
