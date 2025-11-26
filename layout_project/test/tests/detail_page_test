@@ -1,0 +1,68 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:layout_project/pages/details_page.dart'; // Ensure this path is correct
+import 'package:layout_project/models/product.dart'; // Assuming Product model is imported
+import 'package:layout_project/pages/add_product_page.dart'; // No longer needed for this specific test
+import 'package:layout_project/pages/home_page.dart';
+
+void main() {
+  // Define a valid mock product to pass to DetailsPage
+  final mockProduct = Product(
+    name: 'Test Shoe',
+    category: "Footwear",
+    price: 99.99,
+    rating: 4.2,
+    imageUrl: 'assets/images/shoe.png', // This asset won't load, but the test doesn't rely on it
+    description: 'A test product description.',
+  );
+
+  testWidgets('Tapping the back button pops the DetailsPage off the stack',
+      (WidgetTester tester) async {
+    // 1. Arrange: Push DetailsPage onto a navigation stack starting from MockHomePage.
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Builder(
+          builder: (context) {
+            return ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DetailsPage(product: mockProduct),
+                  ),
+                );
+              },
+              child: const Text('Go to Details'),
+            );
+          },
+        ),
+      ),
+    );
+
+    // Act: Navigate to the DetailsPage
+    await tester.tap(find.text('Go to Details'));
+    await tester.pumpAndSettle(); // Wait for the navigation animation to complete
+
+    // Assert (Pre-condition): Verify the DetailsPage is currently visible
+    expect(find.byType(DetailsPage), findsOneWidget, 
+        reason: 'DetailsPage must be on screen before tapping back.');
+    expect(find.byType(HomePage), findsNothing, 
+        reason: 'HomePage should be hidden behind DetailsPage.');
+
+    // 4. Act: Find and tap the back button (the leading chevron icon)
+    final backButtonFinder = find.byIcon(Icons.chevron_left);
+    expect(backButtonFinder, findsOneWidget, 
+        reason: 'The back button icon must be present.');
+
+    await tester.tap(backButtonFinder);
+    await tester.pumpAndSettle(); // Wait for the pop animation to complete
+
+    // 5. Assert (Post-condition): Verify the DetailsPage is gone and the previous page is visible
+    expect(find.byType(DetailsPage), findsNothing, 
+        reason: 'DetailsPage should be popped off the navigation stack.');
+    expect(find.byType(HomePage), findsOneWidget, 
+        reason: 'HomePage (the main list) should be visible again.');
+    expect(find.byType(HomePage), findsOneWidget, 
+        reason: 'The content of the previous page should be displayed.');
+  });
+}
