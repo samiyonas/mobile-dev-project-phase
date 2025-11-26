@@ -25,4 +25,16 @@ void main() {
     // Verify that the product was added and the page is popped
     expect(find.byType(AddProductPage), findsNothing);
   });
+
+  testWidgets('Add Product Page Validation Test', (WidgetTester tester) async {
+    // Build the AddProductPage widget
+    await tester.pumpWidget(MaterialApp(home: AddProductPage()));
+
+    // Tap the 'Add Product' button without entering any details
+    await tester.tap(find.byKey(Key('addProductButton')));
+    await tester.pump(); // Rebuild the widget after the state has changed
+
+    // Verify that a SnackBar is shown with the validation message
+    expect(find.text('Please fill in all fields'), findsOneWidget);
+  });
 }
