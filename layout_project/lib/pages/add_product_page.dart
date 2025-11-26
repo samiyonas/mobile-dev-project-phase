@@ -130,6 +130,7 @@ class _AddProductPageState extends State<AddProductPage> {
             ),
             const SizedBox(height: 8),
             TextField(
+              key: const Key('nameField'),
               controller: _nameController,
               decoration: InputDecoration(
                 filled: true,
@@ -151,6 +152,7 @@ class _AddProductPageState extends State<AddProductPage> {
             ),
             const SizedBox(height: 8),
             TextField(
+              key: const Key('categoryField'),
               controller: _categoryController,
               decoration: InputDecoration(
                 filled: true,
@@ -172,6 +174,7 @@ class _AddProductPageState extends State<AddProductPage> {
             ),
             const SizedBox(height: 8),
             TextField(
+              key: const Key('priceField'),
               controller: _priceController,
               decoration: InputDecoration(
                 filled: true,
@@ -195,6 +198,7 @@ class _AddProductPageState extends State<AddProductPage> {
             ),
             const SizedBox(height: 8),
             TextField(
+              key: const Key('descriptionField'),
               controller: _descriptionController,
               maxLines: 5,
               decoration: InputDecoration(
@@ -212,6 +216,7 @@ class _AddProductPageState extends State<AddProductPage> {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
+                key: const Key('addProductButton'),
                 onPressed: _saveProduct,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue[700],
