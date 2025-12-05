@@ -3,11 +3,11 @@ import 'package:dartz/dartz.dart';
 import '../repo/products_repo.dart';
 import '../../../../core/error/failure.dart';
 
-class CreateProduct {
+class InsertProduct {
   final ProductRepo repo;
   final Product product;
 
-  CreateProduct({
+  InsertProduct({
     required this.repo,
     required this.product
   });
