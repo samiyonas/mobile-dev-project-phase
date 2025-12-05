@@ -4,7 +4,7 @@ import '../entities/product.dart';
 import '../repo/products_repo.dart';
 
 class GetProduct {
-  final ProductRepo repo;
+  final ProductRepository repo;
 
   GetProduct({
     required this.repo

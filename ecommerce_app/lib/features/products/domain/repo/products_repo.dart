@@ -2,7 +2,7 @@ import 'package:dartz/dartz.dart';
 import '../../../../../core/error/failure.dart';
 import '../entities/product.dart';
 
-abstract class ProductRepo {
+abstract class ProductRepository {
   Future<Either<Failure, List<Product>>> viewAllProducts();
   Future<Either<Failure, Product>> getProduct(int id);
   Future<Either<Failure, Product>> insertProduct(Product product);

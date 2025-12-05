@@ -4,7 +4,7 @@ import '../repo/products_repo.dart';
 import '../../../../core/error/failure.dart';
 
 class InsertProduct {
-  final ProductRepo repo;
+  final ProductRepository repo;
   final Product product;
 
   InsertProduct({

@@ -4,7 +4,7 @@ import 'package:dartz/dartz.dart';
 import '../../../../../core/error/failure.dart';
 
 class ViewAllProductsUsecase {
-  final ProductRepo repo;
+  final ProductRepository repo;
 
   ViewAllProductsUsecase({
     required this.repo
