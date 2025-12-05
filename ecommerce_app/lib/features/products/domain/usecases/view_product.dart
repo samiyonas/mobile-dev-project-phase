@@ -3,14 +3,14 @@ import 'package:dartz/dartz.dart';
 import '../entities/product.dart';
 import '../repo/products_repo.dart';
 
-class ViewProductUsecase {
+class GetProduct {
   final ProductRepo repo;
 
-  ViewProductUsecase({
+  GetProduct({
     required this.repo
   });
 
   Future<Either<Failure, Product>> execute(int id) {
-    return repo.viewProduct(id);
+    return repo.getProduct(id);
   }
 }
