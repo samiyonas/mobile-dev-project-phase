@@ -1,5 +1,4 @@
-/*
-Products will have the following properties:
+/* Products will have the following properties:
 Name
 Description
 Price

@@ -13,6 +13,6 @@ class CreateProduct {
   });
 
   Future<Either<Failure, Product>> execute(Product product) {
-    return repo.createProduct(product);
+    return repo.insertProduct(product);
   }
 }
