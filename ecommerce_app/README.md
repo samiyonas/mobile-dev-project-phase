@@ -11,11 +11,6 @@
  - [Getting Started](#getting-started)
  - [Development Workflow](#development-workflow)
  - [Testing](#testing)
- - [Configuration & Environment](#configuration--environment)
- - [CI / Recommended Checks](#ci--recommended-checks)
- - [Contributing](#contributing)
- - [Troubleshooting](#troubleshooting)
- 
  ## Overview
  
  This repository is a Flutter-based e-commerce application arranged to promote testability and separation of concerns. The app divides responsibilities across Presentation, Domain, and Data layers so UI code talks to usecases, usecases talk to abstract repositories, and repository implementations coordinate datasources and model mapping.
@@ -159,51 +154,6 @@
  
  - Keep JSON fixtures in `test/fixtures/` and use them to validate `fromJson` mapping for models.
  
- ## Configuration & Environment
- 
- - Use `--dart-define` for compile-time configuration values such as API base URLs and keys.
- 
- Example:
- 
- ```bash
- flutter run --dart-define=API_BASE_URL=https://api.example.com
- ```
- 
- - For local secrets, keep them out of source control. Use CI secret variables for builds and deployment.
- 
- ## CI / Recommended Checks
- 
- Suggested checks to run in CI (GitHub Actions example):
- 
- - `flutter analyze`
- - `flutter test --coverage` (optional)
- - `dart format --output=none --set-exit-if-changed .` to ensure formatting
- 
- I can add a sample `.github/workflows/ci.yml` that runs these steps if you want.
- 
- ## Contributing
- 
- - Open a feature branch for each change and include tests for new behavior.
- - Follow the existing architecture and folder conventions.
- - Keep PRs focused and add a short description and testing steps.
- 
- ## Troubleshooting
- 
- - Common issues:
-	 - Missing dependencies: run `flutter pub get`.
-	 - Device not found: run `flutter devices` and ensure an emulator or device is available.
-	 - iOS build issues: open `ios/Runner.xcworkspace` in Xcode and resolve signing/capability issues.
- 
- If you need help locating something in the codebase, open an issue or contact the maintainers.
- 
- ---
- 
- If you'd like, I can also:
- 
- - Add Mermaid diagrams (architecture and data flow) inside the README and provide rendered PNGs in `docs/`.
- - Add a sample GitHub Actions workflow for CI that runs format, analyze, and tests.
- 
- If you want any of those, tell me which and I'll add them next.
 # ecommerce_app
 
 This repository contains a Flutter e-commerce sample app.
