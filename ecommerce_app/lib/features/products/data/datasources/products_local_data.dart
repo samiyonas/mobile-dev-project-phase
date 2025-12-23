@@ -1,4 +1,6 @@
+import 'package:ecommerce_app/features/products/data/models/product_model.dart';
+
 abstract class ProductsLocalData {
-  Future<List<Map<String, dynamic>>> getLastProduct();
-  Future<void> cacheProduct(List<Map<String, dynamic>> products);
+  Future<ProductModel> getLastProduct();
+  Future<void> cacheProduct(ProductModel product);
 }
