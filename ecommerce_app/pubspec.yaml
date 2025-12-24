@@ -39,7 +39,7 @@ dependencies:
   # Functional programming things(for Error handling)
   dartz: ^0.10.1
   # Remote API
-  connectivity: ^3.0.6
+  internet_connection_checker: ^3.0.1
   http: ^1.2.3
   # Local Cache
   shared_preferences: ^2.1.1
