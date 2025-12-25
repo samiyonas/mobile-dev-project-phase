@@ -9,8 +9,8 @@ import 'package:ecommerce_app/features/products/data/datasources/products_local_
 import 'package:ecommerce_app/features/products/data/models/product_model.dart';
 
 class MockNetworkInfo extends Mock implements NetWorkInfo {}
-class MockProductsRemoteData extends Mock implements ProductsRemoteData {}
-class MockProductsLocalData extends Mock implements ProductsLocalData {}
+class MockProductsRemoteData extends Mock implements ProductsRemoteDataSource {}
+class MockProductsLocalData extends Mock implements ProductsLocalDataSource {}
 
 
 void main() {

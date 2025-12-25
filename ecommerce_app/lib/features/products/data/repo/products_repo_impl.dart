@@ -8,8 +8,8 @@ import '../datasources/products_local_data.dart';
 
 class ProductsRepoImpl implements ProductRepository {
   final NetWorkInfo networkInfo;
-  final ProductsRemoteData remoteDataSource;
-  final ProductsLocalData localDataSource;
+  final ProductsRemoteDataSource remoteDataSource;
+  final ProductsLocalDataSource localDataSource;
 
   const ProductsRepoImpl({
     required this.networkInfo,
