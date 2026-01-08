@@ -4,7 +4,6 @@ import 'package:ecommerce_app/features/products/data/datasources/products_remote
 import 'package:ecommerce_app/core/error/exception.dart';
 import 'package:http/http.dart' as http;
 import 'package:ecommerce_app/features/products/data/models/product_model.dart';
-import 'package:ecommerce_app/core/error/exception.dart';
 
 import '../../../../fixtures/fixture_reader.dart';
 
